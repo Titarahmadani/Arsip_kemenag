@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\Auth\UserAuthController;
+use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +53,23 @@ Route::get('/video-restore', function () {
     $trashed = \App\Models\Video::onlyTrashed()->paginate(10);
     return view('video.viewrestore', compact('trashed'));
 })->name('video.viewrestore');
+
+// Route::middleware('ensure_admin')->group(function() {
+//     Route::get('/admin/dashboard', fn()=>view('admin.dashboard'))->name('admin.dashboard');
+// });
+
+Route::get('/register',[UserAuthController::class,'showRegisterForm'])->name('register');
+Route::post('/register',[UserAuthController::class,'register']);
+Route::get('/login',[UserAuthController::class,'showLoginForm'])->name('login');
+Route::post('/login',[UserAuthController::class,'login']);
+Route::post('/logout',[UserAuthController::class,'logout'])->name('logout');
+
+Route::middleware('auth')->get('/dashboard',fn()=>view('user.dashboard'))->name('user.dashboard');
+
+Route::prefix('admin')->group(function(){
+    Route::get('/login',[AdminAuthController::class,'showLoginForm'])->name('admin.login');
+    Route::post('/login',[AdminAuthController::class,'login'])->name('admin.login.post');
+    Route::post('/logout',[AdminAuthController::class,'logout'])->name('admin.logout');
+
+    Route::middleware('ensure_admin')->get('/dashboard',fn()=>view('admin.dashboard'))->name('admin.dashboard');
+});
