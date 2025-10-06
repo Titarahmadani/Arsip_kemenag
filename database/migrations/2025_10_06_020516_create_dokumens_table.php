@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('dokumens', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor_arsip');
-            $table->string('nama_arsip');
-            $table->string('kode_klasifikasi');
+            $table->string('nomor_arsip', 100);
+            $table->string('nama_arsip', 100);
+            $table->string('kode_klasifikasi', 50);
             $table->date('tgl_upload');
-            $table->string('pencipta_arsip');
-            $table->string('unit_pengolahan');
-            $table->string('lokasi_arsip');
-            $table->string('keterangan');
+            $table->string('pencipta_arsip', 100);
+            $table->string('unit_pengolahan', 100);
+            $table->string('lokasi_arsip', 100);
+            $table->text('keterangan');
             $table->integer('nomor_box');
             $table->enum('ext',['doc','docx','xls','xlsx','pdf']);
             $table->timestamps();
