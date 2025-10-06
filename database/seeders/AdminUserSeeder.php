@@ -16,7 +16,7 @@ class AdminUserSeeder extends Seeder
 
         // Buat akun admin default jika belum ada
         User::firstOrCreate(
-            ['email' => 'admin@example.com'], // cek berdasarkan email
+            ['email' => 'admin@gmail.com'], // cek berdasarkan email
             [
                 'username' => 'Administrator',
                 'password' => Hash::make('admin12345'), // ganti password default sesuai kebutuhan
